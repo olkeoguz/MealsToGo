@@ -1,5 +1,4 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
 import { SvgXml } from 'react-native-svg';
 import { Text } from '../../../components/typography/text';
 
@@ -29,6 +28,7 @@ const RestaurantInfoCard = ({ restaurant = {} }) => {
     isOpenNow = true,
     rating = 4,
     isClosedTemporarily = true,
+    placeId,
   } = restaurant;
 
   // const ratingArray = Array.from(new Array(Math.floor(rating)));
@@ -36,31 +36,34 @@ const RestaurantInfoCard = ({ restaurant = {} }) => {
 
   return (
     <RestaurantCard elevation={5}>
-      <TouchableOpacity activeOpacity={0.7}>
-      <RestaurantCardCover key={name} source={{ uri: photos[0] }} />
-      <Info>
-        <Text variant='label'>{name}</Text>
-        <Section>
-          <Rating>
-            {ratingArray.map((_, index) => (
-              <SvgXml xml={star} width={20} height={20} key={index} />
-            ))}
-          </Rating>
-          <SectionEnd>
-            {isClosedTemporarily && (
-              <Text variant='error'>CLOSED TEMPORARILY</Text>
-            )}
-            <Spacer position='left' size='large'>
-              {isOpenNow && <SvgXml xml={open} width={20} height={20} />}
-            </Spacer>
-            <Spacer position='left' size='large'>
-              <Icon source={{ uri: icon }} />
-            </Spacer>
-          </SectionEnd>
-        </Section>
-        <Address>{address}</Address>
-      </Info>
-      </TouchableOpacity>
+        <RestaurantCardCover key={name} source={{ uri: photos[0] }} />
+        <Info>
+          <Text variant='label'>{name}</Text>
+          <Section>
+            <Rating>
+              {ratingArray.map((_, index) => (
+                <SvgXml
+                  xml={star}
+                  width={20}
+                  height={20}
+                  key={`star-${placeId}-${index}`}
+                />
+              ))}
+            </Rating>
+            <SectionEnd>
+              {isClosedTemporarily && (
+                <Text variant='error'>CLOSED TEMPORARILY</Text>
+              )}
+              <Spacer position='left' size='large'>
+                {isOpenNow && <SvgXml xml={open} width={20} height={20} />}
+              </Spacer>
+              <Spacer position='left' size='large'>
+                <Icon source={{ uri: icon }} />
+              </Spacer>
+            </SectionEnd>
+          </Section>
+          <Address>{address}</Address>
+        </Info>
     </RestaurantCard>
   );
 };
